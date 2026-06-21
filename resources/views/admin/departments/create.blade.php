@@ -18,7 +18,7 @@
         </label>
 
         <input
-            type="text"
+            type="text" value="{{ old('name') }}"
             name="name"
             class="border w-full p-3 rounded">
 

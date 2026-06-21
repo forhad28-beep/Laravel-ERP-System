@@ -18,7 +18,7 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{ route('admin.employees.index') }}">
                 Employees
             </a>
         </li>
