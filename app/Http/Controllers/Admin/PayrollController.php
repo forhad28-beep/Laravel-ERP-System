@@ -10,13 +10,27 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PayrollController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
         $payrolls = Payroll::with('employee')
-            ->latest()
-            ->get();
+            ->when($search, function ($query) use ($search) {
 
-        return view('admin.payrolls.index', compact('payrolls'));
+                $query->whereHas('employee', function ($q) use ($search) {
+
+                    $q->where(
+                        'name',
+                        'like',
+                        "%{$search}%"
+                    );
+
+                });
+
+            })
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.payrolls.index', compact('payrolls', 'search'));
     }
 
     public function create()

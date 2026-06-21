@@ -9,14 +9,24 @@ use App\Models\Employee;
 
 class EmployeeController extends Controller
 {
-    public function index()
-    {
-        $employees = Employee::with('department')
-            ->latest()
-            ->get();
+public function index(Request $request)
+{
+    $search = $request->search;
 
-        return view('admin.employees.index', compact('employees'));
-    }
+    $employees = Employee::query()
+        ->when($search, function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%");
+        })
+        ->latest()
+        ->paginate(10);
+
+    return view(
+        'admin.employees.index',
+        compact('employees', 'search')
+    );
+}
 
     public function create()
     {

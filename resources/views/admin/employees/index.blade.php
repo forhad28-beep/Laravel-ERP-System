@@ -22,6 +22,23 @@
 
     <div class="bg-white rounded shadow overflow-x-auto">
 
+    <form method="GET"
+      class="mb-4 flex gap-2">
+
+    <input
+        type="text"
+        name="search"
+        value="{{ request('search') }}"
+        placeholder="Search employee..."
+        class="border p-2 rounded w-80">
+
+    <button
+        class="bg-blue-600 text-black px-4 rounded">
+        Search
+    </button>
+
+</form>
+<div class="overflow-x-auto">
         <table class="w-full">
 
             <thead>
@@ -132,6 +149,11 @@
             </tbody>
 
         </table>
+        </div>
+
+        <div class="mt-4">
+    {{ $employees->links() }}
+</div>
 
     </div>
 

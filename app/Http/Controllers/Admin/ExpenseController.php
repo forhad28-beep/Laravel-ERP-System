@@ -8,20 +8,36 @@ use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
-    public function index()
-    {
-        $expenses = Expense::latest()->get();
+public function index(Request $request)
+{
+    $search = $request->search;
 
-        $totalExpense = Expense::sum('amount');
+    $expenses = Expense::when(
+            $search,
+            function ($query) use ($search) {
 
-        return view(
-            'admin.expenses.index',
-            compact(
-                'expenses',
-                'totalExpense'
-            )
-        );
-    }
+                $query->where(
+                    'title',
+                    'like',
+                    "%{$search}%"
+                );
+
+            }
+        )
+        ->latest()
+        ->paginate(10);
+
+    $totalExpense = Expense::sum('amount');
+
+    return view(
+        'admin.expenses.index',
+        compact(
+            'expenses',
+            'totalExpense',
+            'search'
+        )
+    );
+}
 
     public function create()
     {

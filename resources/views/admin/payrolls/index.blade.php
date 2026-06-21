@@ -26,6 +26,17 @@
 
     <div class="bg-white rounded shadow overflow-x-auto">
 
+        <form method="GET" class="mb-4 flex gap-2">
+
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search employee..."
+                class="border p-2 rounded">
+
+            <button class="bg-blue-600 text-black px-4 rounded">
+                Search
+            </button>
+
+        </form>
+
         <table class="w-full">
 
             <thead>
@@ -113,6 +124,9 @@
             </tbody>
 
         </table>
+        <div class="mt-4">
+            {{ $payrolls->links() }}
+        </div>
 
     </div>
 

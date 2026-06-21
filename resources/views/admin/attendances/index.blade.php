@@ -25,7 +25,7 @@
     @endif
 
     <div class="bg-white rounded shadow">
-
+<div class="overflow-x-auto">
         <table class="w-full">
 
             <thead>
@@ -83,7 +83,10 @@
             </tbody>
 
         </table>
-
+        </div>
+<div class="mt-4">
+    {{ $attendances->links() }}
+</div>
     </div>
 
 @endsection
