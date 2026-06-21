@@ -1,4 +1,4 @@
-<div class="w-64 min-h-screen bg-gray-900 text-white">
+<div class="w-64 min-h-screen bg-gray-900 text-black">
     <div class="p-5 text-2xl font-bold border-b">
         Mini ERP
     </div>
@@ -24,14 +24,26 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{ route('admin.attendances.index') }}">
                 Attendance
             </a>
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{ route('admin.leaves.index') }}">
+                Leaves
+            </a>
+        <li>
+
+        <li>
+            <a href="{{ route('admin.payrolls.index') }}">
                 Payroll
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('admin.expenses.index') }}">
+                Expenses
             </a>
         </li>
 
