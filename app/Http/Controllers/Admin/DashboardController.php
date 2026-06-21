@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Expense;
 use App\Models\LeaveRequest;
 use App\Models\Payroll;
 
@@ -47,6 +48,13 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        $totalExpense = Expense::sum('amount');
+
+        $inactiveEmployees = Employee::where(
+            'status',
+            'inactive'
+        )->count();
+
         return view(
             'admin.dashboard',
             compact(
@@ -54,11 +62,14 @@ class DashboardController extends Controller
                 'activeEmployees',
                 'totalDepartments',
                 'todayAttendance',
-                
+
                 'totalPayroll',
                 'payrollRecords',
                 'recentEmployees',
-                'recentPayrolls'
+                'recentPayrolls',
+                'totalExpense',
+                'activeEmployees',
+                'inactiveEmployees'
             )
         );
     }

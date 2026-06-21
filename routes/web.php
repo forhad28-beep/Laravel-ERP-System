@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\LeaveRequestController;
 use App\Http\Controllers\Admin\PayrollController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SettingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,5 +57,24 @@ Route::middleware(['auth', 'admin'])
             )->name('leaves.updateStatus');
             Route::resource('payrolls', PayrollController::class);
             Route::resource('expenses', ExpenseController::class);
+            Route::get(
+                '/reports',
+                [ReportController::class, 'index']
+            )->name('reports.index');
+
+            Route::get('payroll-report/pdf', [PayrollController::class, 'pdf'])
+                ->name('payrolls.pdf');
+
+            Route::resource('payrolls', PayrollController::class);
+
+            Route::get(
+                '/settings',
+                [SettingController::class, 'index']
+            )->name('settings.index');
+
+            Route::post(
+                '/settings',
+                [SettingController::class, 'update']
+            )->name('settings.update');
         }
     );

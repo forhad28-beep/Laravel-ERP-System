@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\Payroll;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PayrollController extends Controller
 {
@@ -110,5 +111,17 @@ class PayrollController extends Controller
             ->route('admin.payrolls.index')
             ->with('success', 'Payroll deleted.');
     }
-    
+
+    public function pdf()
+    {
+        $payrolls = Payroll::with('employee')->get();
+
+        $pdf = Pdf::loadView(
+            'admin.payrolls.pdf',
+            compact('payrolls')
+        );
+
+        return $pdf->download('payroll-report.pdf');
+    }
+
 }
