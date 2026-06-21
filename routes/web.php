@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartmentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,5 +34,5 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
-
+        Route::resource('departments', DepartmentController::class);
     });

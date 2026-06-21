@@ -12,7 +12,7 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{ route('admin.departments.index') }}">
                 Departments
             </a>
         </li>
