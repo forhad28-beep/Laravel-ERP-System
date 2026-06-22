@@ -9,24 +9,24 @@ use App\Models\Employee;
 
 class EmployeeController extends Controller
 {
-public function index(Request $request)
-{
-    $search = $request->search;
+    public function index(Request $request)
+    {
+        $search = $request->search;
 
-    $employees = Employee::query()
-        ->when($search, function ($query) use ($search) {
-            $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('phone', 'like', "%{$search}%");
-        })
-        ->latest()
-        ->paginate(10);
+        $employees = Employee::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10);
 
-    return view(
-        'admin.employees.index',
-        compact('employees', 'search')
-    );
-}
+        return view(
+            'admin.employees.index',
+            compact('employees', 'search')
+        );
+    }
 
     public function create()
     {
@@ -48,6 +48,10 @@ public function index(Request $request)
 
         Employee::create($request->all());
 
+        activityLog(
+            'Employee',
+            'Employee Added'
+        );
         return redirect()
             ->route('admin.employees.index')
             ->with('success', 'Employee added successfully.');
@@ -77,17 +81,27 @@ public function index(Request $request)
 
         $employee->update($request->all());
 
+        activityLog(
+            'Employee',
+            'Employee Updated'
+        );
         return redirect()
             ->route('admin.employees.index')
             ->with('success', 'Employee updated successfully.');
+
     }
 
     public function destroy(Employee $employee)
     {
         $employee->delete();
 
+        activityLog(
+            'Employee',
+            'Employee Deleted'
+        );
         return redirect()
             ->route('admin.employees.index')
             ->with('success', 'Employee deleted successfully.');
+
     }
 }

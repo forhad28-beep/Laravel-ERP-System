@@ -12,7 +12,7 @@
             Download PDF
         </a>
 
-        <a href="{{ route('admin.payrolls.create') }}" class="bg-green-600 text-white px-4 py-2 rounded">
+        <a href="{{ route('admin.payrolls.create') }}" class="bg-green-600 text-black px-4 py-2 rounded">
             Create Payroll
         </a>
 

@@ -73,5 +73,11 @@
             </a>
         </li>
 
+        <li>
+            <a href="{{ route('admin.activity.logs') }}">
+                Activity Logs
+            </a>
+        </li>
+
     </ul>
 </div>

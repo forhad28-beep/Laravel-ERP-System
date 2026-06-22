@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
-public function index(Request $request)
-{
-    $search = $request->search;
+    public function index(Request $request)
+    {
+        $search = $request->search;
 
-    $expenses = Expense::when(
+        $expenses = Expense::when(
             $search,
             function ($query) use ($search) {
 
@@ -24,20 +24,24 @@ public function index(Request $request)
 
             }
         )
-        ->latest()
-        ->paginate(10);
+            ->latest()
+            ->paginate(10);
 
-    $totalExpense = Expense::sum('amount');
+        $totalExpense = Expense::sum('amount');
 
-    return view(
-        'admin.expenses.index',
-        compact(
-            'expenses',
-            'totalExpense',
-            'search'
-        )
-    );
-}
+        activityLog(
+            'Expense',
+            'Expense Added'
+        );
+        return view(
+            'admin.expenses.index',
+            compact(
+                'expenses',
+                'totalExpense',
+                'search'
+            )
+        );
+    }
 
     public function create()
     {

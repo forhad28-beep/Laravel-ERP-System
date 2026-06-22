@@ -4,7 +4,7 @@
 
         <img
             src="{{ asset('storage/' . $setting->logo) }}"
-            class="w-7 h-7 rounded object-cover">
+            class="w-7 h-7 rounded object-cover rounded-full">
 
     @endif
 

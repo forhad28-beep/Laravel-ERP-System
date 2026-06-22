@@ -44,6 +44,11 @@ class SettingController extends Controller
 
         $setting->save();
 
+        activityLog(
+            'Settings',
+            'Settings updated'
+        );
+
         return back()->with(
             'success',
             'Settings updated.'

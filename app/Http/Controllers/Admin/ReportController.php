@@ -7,6 +7,8 @@ use App\Models\Attendance;
 use App\Models\Employee;
 use App\Models\Expense;
 use App\Models\Payroll;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
@@ -61,4 +63,58 @@ class ReportController extends Controller
             )
         );
     }
+
+    public function payrollPdf(Request $request)
+    {
+        $month = $request->month;
+
+        $payrolls = Payroll::with('employee')
+            ->when($month, function ($query) use ($month) {
+                $query->where('month', $month);
+            })
+            ->get();
+
+        $pdf = Pdf::loadView(
+            'admin.reports.payroll-pdf',
+            compact('payrolls', 'month')
+        );
+
+        return $pdf->download('payroll-report.pdf');
+    }
+    public function expensePdf(Request $request)
+    {
+        $month = $request->month;
+
+        $expenses = Expense::when(
+            $month,
+            function ($query) use ($month) {
+
+                $query->whereMonth(
+                    'expense_date',
+                    date('m', strtotime($month))
+                );
+
+            }
+        )->get();
+
+        $pdf = Pdf::loadView(
+            'admin.reports.expense-pdf',
+            compact('expenses', 'month')
+        );
+
+        return $pdf->download('expense-report.pdf');
+    }
+public function employeePdf()
+{
+    $employees = Employee::with('department')
+        ->latest()
+        ->get();
+
+    $pdf = Pdf::loadView(
+        'admin.reports.employee-pdf',
+        compact('employees')
+    );
+
+    return $pdf->download('employee-report.pdf');
+}
 }

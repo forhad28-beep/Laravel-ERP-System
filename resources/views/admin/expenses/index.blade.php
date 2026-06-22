@@ -17,7 +17,7 @@
 
         </div>
 
-        <a href="{{ route('admin.expenses.create') }}" class="bg-green-600 text-white px-4 py-2 rounded">
+        <a href="{{ route('admin.expenses.create') }}" class="bg-green-600 text-black px-4 py-2 rounded">
 
             Add Expense
 

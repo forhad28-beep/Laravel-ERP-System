@@ -238,6 +238,22 @@
 
     </div>
 
+    <div class="bg-white rounded-lg shadow p-5">
+    <h3 class="font-semibold mb-4">
+        Recent Activities
+    </h3>
+
+    @foreach($recentActivities as $activity)
+        <div class="border-b py-2">
+            {{ $activity->action }}
+            <br>
+            <small>
+                {{ $activity->created_at->diffForHumans() }}
+            </small>
+        </div>
+    @endforeach
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 

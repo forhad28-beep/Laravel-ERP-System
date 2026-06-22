@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -76,5 +77,25 @@ Route::middleware(['auth', 'admin'])
                 '/settings',
                 [SettingController::class, 'update']
             )->name('settings.update');
+            Route::get(
+                '/reports/payroll-pdf',
+                [ReportController::class, 'payrollPdf']
+            )->name('reports.payroll.pdf');
+
+            Route::get(
+                '/reports/expense-pdf',
+                [ReportController::class, 'expensePdf']
+            )->name('reports.expense.pdf');
+
+            Route::get(
+                '/reports/employee-pdf',
+                [ReportController::class, 'employeePdf']
+            )->name('reports.employee.pdf');
+
+            Route::get(
+                '/activity-logs',
+                [ActivityLogController::class, 'index']
+            )->name('activity.logs');
         }
     );
+

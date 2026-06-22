@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Attendance;
 use App\Models\Department;
 use App\Models\Employee;
@@ -55,6 +56,10 @@ class DashboardController extends Controller
             'inactive'
         )->count();
 
+        $recentActivities = ActivityLog::latest()
+    ->take(5)
+    ->get();
+
         return view(
             'admin.dashboard',
             compact(
@@ -69,7 +74,8 @@ class DashboardController extends Controller
                 'recentPayrolls',
                 'totalExpense',
                 'activeEmployees',
-                'inactiveEmployees'
+                'inactiveEmployees',
+                'recentActivities'
             )
         );
     }

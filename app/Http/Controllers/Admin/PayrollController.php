@@ -77,10 +77,15 @@ class PayrollController extends Controller
             'deduction' => $deduction,
             'net_salary' => $netSalary,
         ]);
-
+        activityLog(
+            'Payroll',
+            'Payroll Generated'
+        );
         return redirect()
             ->route('admin.payrolls.index')
             ->with('success', 'Payroll created successfully.');
+
+
     }
     public function edit(Payroll $payroll)
     {
